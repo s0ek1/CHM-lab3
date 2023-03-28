@@ -23,7 +23,8 @@ public class Solver implements LinearSystemSolver {
             x[i] = (b[i] - sum) / A[i][i];
         }
         for (int i = 0; i < n; i++) System.out.println("x[" + i + "] = " + x[i]);
-        System.out.println("Погрешность: " + estimateError(A,b,x)+"\n");
+        System.out.println("Погрешность: ");
+        estimateError(A, b, x);
     }
     @Override
     public void solveLU(double[][] A, double[] b) {
@@ -62,60 +63,68 @@ public class Solver implements LinearSystemSolver {
             x[i] = x[i] / U[i][i];
         }
         for (int i = 0; i < n; i++) System.out.println("x[" + i + "] = " + x[i]);
-        System.out.println("Погрешность: " + estimateError(A,b,x)+"\n");
+        System.out.println("Погрешность: ");
+        estimateError(A, b, x);
     }
     @Override
     public void solveSquareSqrt(double[][] A, double[] b) {
-            System.out.println("Решение методом квадратного корня:\n" + "----------------------------------");
-            boolean status;
-            loop:
-            while (true) {
-                for (int i = 0; i < A.length; i++) {
-                    for (int j = 0; j < A[i].length; j++) {
-                        if (A[i][j] <= 0) { System.out.println("Матрица содержит отрицательные числа."); status = false; break loop;}
-                    }
+        System.out.println("Решение методом квадратного корня:\n" + "----------------------------------");
+        loop:
+        while (true) {
+            for (int i = 0; i < A.length; i++) {
+                for (int j = 0; j < A[i].length; j++) {
+                    if (A[i][j] <= 0) { System.out.println("Матрица содержит отрицательные числа.");  break loop;}
                 }
             }
+        }
         double[][] At = new double[A.length][A.length];
         for (int i = 0; i < A.length; i++) {
             for (int j = 0; j < A[i].length; j++) {
                 At[j][i] = A[i][j];
             }
         }
-        if (!Arrays.deepEquals(A, At)) { System.out.println("Матрица не является обратно симметричной."); status = false; }
-        if(status == false) return;
-            int n = A.length;
-            double[][] L = new double[n][n];
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < (i + 1); j++) {
-                    double sum = 0.0;
-                    for (int k = 0; k < j; k++) {
-                        sum += L[i][k] * L[j][k];
-                    }
-                    if (i == j) L[i][j] = Math.sqrt(A[i][i] - sum);
-                     else L[i][j] = (1.0 / L[j][j] * (A[i][j] - sum));
-                }
+        if (!Arrays.deepEquals(A, At))System.out.println("Матрица не является обратно симметричной.");
+        int n = A.length;
+        for (int i = 0; i < A.length; i++) {
+            for (int j = i+1; j < A.length; j++) {
+                A[j][i] = A[i][j];
             }
-            double[] y = new double[n];
-            for (int i = 0; i < n; i++) {
+        }
+        double[][] L = new double[A.length][A.length];
+        for (int i = 0; i < A.length; i++) {
+            for (int j = 0; j <= i; j++) {
                 double sum = 0.0;
-                for (int j = 0; j < i; j++) {
-                    sum += L[i][j] * y[j];
+                for (int k = 0; k < j; k++) {
+                    sum += L[i][k] * L[j][k];
                 }
-                y[i] = (b[i] - sum) / L[i][i];
-            }
-            double[] x = new double[n];
-            for (int i = n - 1; i >= 0; i--) {
-                double sum = 0.0;
-                for (int j = i + 1; j < n; j++) {
-                    sum += L[j][i] * x[j];
+                if (i == j) {
+                    L[i][i] = Math.sqrt(A[i][i] - sum);
+                } else {
+                    L[i][j] = (A[i][j] - sum) / L[j][j];
                 }
-                x[i] = (y[i] - sum) / L[i][i];
             }
-            for (int i = 0; i < n; i++) System.out.println("x[" + i + "] = " + x[i]);
-            System.out.println("Погрешность: " + estimateError(A, b, x));
+        }
+        double[] y = new double[n];
+        for (int i = 0; i < n; i++) {
+            double sum = 0.0;
+            for (int j = 0; j < i; j++) {
+                sum += L[i][j] * y[j];
+            }
+            y[i] = (b[i] - sum) / L[i][i];
+        }
+        double[] x = new double[n];
+        for (int i = n - 1; i >= 0; i--) {
+            double sum = 0.0;
+            for (int j = i+1; j < n; j++) {
+                sum += L[j][i] * x[j];
+            }
+            x[i] = (y[i] - sum) / L[i][i];
+        }
+        for (int i = 0; i < n; i++) System.out.println("x[" + i + "] = " + x[i]);
+        System.out.println("Погрешность: ");
+        estimateError(A, b, x);
     }
-    private double estimateError(double[][] A, double[] b, double[] x) {
+    private void estimateError(double[][] A, double[] b, double[] x) {
         int n = b.length;
         double[] residual = new double[n];
         double[] Ax = new double[n];
@@ -124,19 +133,17 @@ public class Solver implements LinearSystemSolver {
             for (int j = 0; j < n; j++) {
                 Ax[i] += A[i][j] * x[j];
             }
-            residual[i] = b[i] - Ax[i];
+            residual[i] = Math.abs(b[i] - (Ax[i]+1e-15));
         }
-        double norm = 0.0;
         for (int i = 0; i < n; i++) {
-            norm += residual[i] * residual[i];
+            System.out.println(" для x[" + i + "]: " + residual[i]);
         }
-        norm = Math.sqrt(norm);
-        return norm;
+        System.out.println();
     }
     @Override
     public void print(double[][] A) {
         for (double[] doubles : A) {for (int j = 0; j < A.length; j++) {
-            System.out.print(doubles[j] + "\t");
+            System.out.print(String.format("%.2f", doubles[j])+"\t");
         } System.out.println(); }
         System.out.println();
     }

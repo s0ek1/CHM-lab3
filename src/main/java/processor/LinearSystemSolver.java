@@ -4,4 +4,5 @@ public interface LinearSystemSolver {
     void solveLU(double[][] A, double[] b);
     void solveSquareSqrt(double[][] A, double[] b);
     void print(double[][] A);
+
 }

@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c6c3d9b5-363f-43ac-bda0-35963e86e2da" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="c6c3d9b5-363f-43ac-bda0-35963e86e2da" name="Changes" comment="j">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/processor/LinearSystemSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/processor/LinearSystemSolver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/processor/Solver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/processor/Solver.java" afterDir="false" />
@@ -24,6 +22,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -91,10 +92,25 @@
       <updated>1679160545827</updated>
       <workItem from="1679160546429" duration="9951000" />
       <workItem from="1679215365591" duration="8968000" />
+      <workItem from="1679830570432" duration="20000" />
+      <workItem from="1679848017105" duration="10000" />
+      <workItem from="1679983463471" duration="85000" />
+      <workItem from="1679983559776" duration="10037000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
